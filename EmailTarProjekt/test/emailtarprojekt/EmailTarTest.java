@@ -52,5 +52,73 @@ public class EmailTarTest {
             }
         }
     }
+
+    /**
+     * Test of ellenorzes method, of class EmailTar.
+     */
+    @Test
+    public void testEllenorzesNincsKukac() {
+        System.out.println("testEllenorzesNincsKukac");
+        try{
+            EmailTar instance = new EmailTar("peti.vasvari.hu");
+            instance.ellenorzes();
+            fail("Az ellenörzés kukac nélküli emailcímre nem dob kivételt!");
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage()!="Az email cim nem tartalmaz kukacot!")
+            {
+                fail("Kukac nélküli emailcím esetén az ellenőrzés rossz szövegű kivételt dob.");
+            }
+        }
+    }
+    
+    @Test
+    public void testEllenorzesNagybetuKukacElott() {
+        System.out.println("testEllenorzesNagybetuKukacElott");
+        try{
+            EmailTar instance = new EmailTar("Peti@vasvari.hu");
+            instance.ellenorzes();
+            fail("Az ellenörzés kukac előtt nagybetű esetén nem dob kivételt!");
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage()!="Az email cim kukac előtt nagybetűt tartalmaz!")
+            {
+                fail("Kukac előtt nagybetű és az ellenőrzés rossz szövegű kivételt dob.");
+            }
+        }
+    }
+    
+    @Test
+    public void testEllenorzesNagybetuKisbetuEsTobbPont() {
+        System.out.println("testEllenorzesNagybetuKisbetuEsTobbPont");
+        try{
+            EmailTar instance = new EmailTar("peti.p.p@vasvari.hu");
+            instance.ellenorzes();
+            fail("Az ellenörzés kukac előtt több pont esetén nem dob kivételt!");
+        }
+        catch(Exception e)
+        {
+            if(e.getMessage()!="Az email cim kukac előtt több pontot tartalmaz!")
+            {
+                fail("Kukac előtt több pont és az ellenőrzés rossz szövegű kivételt dob.");
+            }
+        }
+    }
+    
+    @Test
+    public void testEllenorzesTokeletesEmailcim() {
+        System.out.println("testEllenorzesTokeletesEmailcim");
+        try{
+            EmailTar instance = new EmailTar("nagy.peti@vasvari.hu");
+            instance.ellenorzes();
+        }
+        catch(Exception e)
+        {
+            fail("Az ellenörző jó emailcímre kivételt dobott!");
+            
+        }
+    }
     
 }
